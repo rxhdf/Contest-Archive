@@ -1,3 +1,4 @@
+//20 points (PA)
 #include <bits/stdc++.h>
 
 #define MAXN 10002
