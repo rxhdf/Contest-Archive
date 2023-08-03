@@ -1,4 +1,3 @@
-
 #include <bits/stdc++.h>
 
 #define MAXN 2000100
