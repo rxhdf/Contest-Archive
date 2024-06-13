@@ -11,31 +11,13 @@ int main(){
     for(int i = 1; i <= N; ++i){
         cin >> A[i];
     }
-    int c1 = 0, c2 = 0;
+    int Start_zero = 0, Start_one = 0;
+    int Sz = 0, So = 1; 
     for(int i = 1; i <= N; ++i){
-        if(WS % 2 == 0){
-            if(A[i] == 1){
-                c1++;
-            }
-        }
-        else if(WS % 2 != 0){
-            if(A[i] == 0){
-                c1++;
-            }
-        }
-        else if(BS % 2 == 0){
-            if(A[i] == 0){
-                c2++;
-            }
-        }else{
-            if(A[i] == 1){
-                c2++;
-            }
-        }
-        
-        BS++;
-        WS++;
+        if(A[i] != Sz)Start_zero++;
+        if(A[i] != So)Start_one++;
+        swap(Sz, So);
     }
-    cout << min(BS, WS) << "\n";
+    cout << min(Start_zero, Start_one) << "\n";
     return 0;
 }
