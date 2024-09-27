@@ -1,67 +1,109 @@
 #include <bits/stdc++.h>
-#define MAX 1502
-#define vector<vector<int>> Matrix
-#define vector<vector<bool>> Matrib
+#include <utility>
+#define MAX 1002
+#define Matrix vector<vector<char>> 
+
 using namespace std;
 
-struct Point{
-    int x, y;
-    friend bool operator==(const Point &a, const Point &b){
-        return a.x == b.x && a.y == b.y;
-    };
-};
-
 int N, M;
-int dx[8] = {1, 1, 1, 0, 0, -1, -1, -1};
-int dy[8] = {1, 0, -1, 1, -1, 1, 0, -1};
-Matrib visited(MAX, vector<bool>(MAX, false));
-Matrix G(MAX, vector<int>(MAX, 0));
-queue<Point> Q;
+vector<int> f = {1, 0, 0, -1};
+vector<int> c = {0, 1, -1, 0};
+Matrix Garden(MAX, vector<char>(MAX, '#'));
+Matrix GardenZ(MAX, vector<char>(MAX, '.'));
+set<pair<int, int>> corners_free, corners_rock;
+set<pair<pair<int, int>, pair<int, int>>> walls;
 
-bool is_corner(int i, int j){
-    //Upper-right
+bool check_wall_x(int x, int y){
+    int a = x, b = y;
+    bool ok = true;
+    while(ok && x >= 1){
+        --x;
+        if(corners_rock.find({x, y}) != corners_rock.end()){
+            walls.insert(make_pair(make_pair(x, y), make_pair(a, b)));
+        }
+        if(GardenZ[x][y] == '.')ok = false;
+    }
+    x = a;
+    while(ok && x <= N){
+        ++x;
+        if(corners_rock.find({x, y}) != corners_rock.end()){
+            walls.insert(make_pair(make_pair(x, y), make_pair(a, b)));
+        }
+        if(GardenZ[x][y] == '.')ok = false;
+    }
+    return ok;
+}
+
+
+bool check_corner_rock(int x, int y){
     if(){
 
-    }
-    //Upper-left
-    if(){
+    }   
+    else if(){
 
-    }
-    //Bottom-right
-    if(){
+    } 
+    else if(){
+        
+    } 
+    else if(){
+        
+    } 
+}
 
+bool check_corner_point(int x, int y){
+    if(Garden[x][y] == '.' && Garden[x + 1][y - 1] == '#' && Garden[x + 1][y] == '#' && Garden[x][y - 1] == '#'){
+        return true;
     }
-    //Bottom-left
-    if(){
+    else if(Garden[x][y] == '.' && Garden[x + 1][y + 1] == '#' && Garden[x + 1][y] == '#' && Garden[x][y + 1] == '#'){
+        return true;
+    }
+    else if(Garden[x][y] == '.' && Garden[x - 1][y - 1] == '#' && Garden[x - 1][y] == '#' && Garden[x][y - 1] == '#'){
+        return true;
+    }
+    else if(Garden[x][y] == '.' && Garden[x - 1][y + 1] == '#' && Garden[x - 1][y] == '#' && Garden[x][y + 1] == '#'){
+        return true;
+    }
+    return false;
+}
 
-    }
+void validate(int x, int y){
+    if(!corners_free.count({x, y})){
+        bool corner = check_corner_point(x, y);
+        if(corner)corners_free.insert(make_pair(x, y));
+    }   
+}
+
+void validate2(int x, int y){
+    if(!corners_rock.count({x, y})){
+        bool corner = check_corner_rock(x, y);
+        if(corner)corners_rock.insert(make_pair(x, y));
+    }   
 }
 
 int main(){
-    ios_base::sync_with_stdio(0);   
+    ios_base::sync_with_stdio(false);
     cin.tie(nullptr);
     cin >> N >> M;
-    // Read the matrix
     for(int i = 1; i <= N; ++i){
         for(int j = 1; j <= M; ++j){
-            cin >> G[i][j];
+            cin >> Garden[i][j];
+            GardenZ[i][j] = Garden[i][j];
         }
     }
-    // Check corners
     for(int i = 1; i <= N; ++i){
         for(int j = 1; j <= M; ++j){
-            if(G[i][j] == 0 && is_corner(i, j) && !visited[i][j]){
-                Q.push({i, j});
-                visited[i][j] = true;
-            }
+            if(Garden[i][j] == '.')validate(i, j);
+            //else if(Garden[i][j] == '#')validate2(i, j);
         }
     }
-    while(!Q.empty()){
-        Point next = Q.front();
-        Q.pop();
-
-        G[Q.x][Q.y] = 1;
-        
+    
+    cout << "b\n";
+    for(auto e: corners_free){
+        cout << e.first << e.second << "\n";
+    }
+    cout << "---\n";
+    for(auto e: walls){
+        cout << e.first.first << " " << e.first.second << "-" << e.second.first << " " << e.second.second << "\n";
     }
     return 0;
 }
