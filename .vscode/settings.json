@@ -57,7 +57,8 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "files.associations": {
     "iostream": "cpp",
-    "vector": "cpp"
+    "vector": "cpp",
+    "tuple": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled",
   "cmake.configureOnOpen": true
