@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Temario ICO/ICOA 2026 — 80 Días</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0a0f;
+    --bg2: #111118;
+    --bg3: #18181f;
+    --surface: #1e1e28;
+    --surface2: #25252f;
+    --border: rgba(255,255,255,0.07);
+    --border2: rgba(255,255,255,0.12);
+    --text: #e8e8f0;
+    --muted: #888896;
+    --dim: #555562;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+
+    /* category colors */
+    --pwn: #ff5f5f;
+    --crypto: #a78bfa;
+    --re: #34d399;
+    --web: #38bdf8;
+    --forensics: #fbbf24;
+    --ai: #f472b6;
+    --misc: #94a3b8;
+    --tools: #6ee7b7;
+  }
+
+  html { background: var(--bg); color: var(--text); font-family: var(--sans); font-size: 14px; line-height: 1.6; }
+
+  .header {
+    padding: 48px 32px 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; left: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(167,139,250,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 12px;
+  }
+  h1 {
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  h1 span { color: var(--crypto); }
+  .header-sub {
+    font-size: 13px;
+    color: var(--muted);
+    max-width: 560px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .meta-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .chip {
+    font-family: var(--mono);
+    font-size: 11px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .chip.highlight { color: var(--ai); border-color: rgba(244,114,182,0.3); background: rgba(244,114,182,0.06); }
+
+  .nav {
+    display: flex; gap: 0; border-bottom: 1px solid var(--border);
+    padding: 0 32px; overflow-x: auto; background: var(--bg);
+    position: sticky; top: 0; z-index: 100; backdrop-filter: blur(8px);
+  }
+  .nav-tab {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.05em;
+    padding: 14px 18px; cursor: pointer; border: none; background: transparent;
+    color: var(--muted); border-bottom: 2px solid transparent; transition: 0.15s;
+    white-space: nowrap; margin-bottom: -1px;
+  }
+  .nav-tab:hover { color: var(--text); }
+  .nav-tab.active { color: var(--text); border-bottom-color: var(--crypto); }
+
+  .main { padding: 32px; max-width: 1280px; margin: 0 auto; }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 12px; margin-bottom: 28px; }
+  .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 16px 14px; text-align: center; }
+  .stat-num { font-family: var(--mono); font-size: 26px; font-weight: 600; display: block; margin-bottom: 2px; }
+  .stat-lbl { font-size: 11px; color: var(--muted); }
+
+  .sec-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--muted); margin: 24px 0 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .sec-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  .phase-card { border: 1px solid var(--border); border-radius: 10px; margin-bottom: 12px; overflow: hidden; }
+  .phase-header {
+    display: flex; align-items: center; gap: 14px; padding: 16px 20px;
+    cursor: pointer; background: var(--surface); user-select: none;
+  }
+  .phase-badge { font-size: 11px; font-weight: 500; font-family: var(--mono); padding: 3px 10px; border-radius: 3px; }
+  .phase-title-wrap { flex: 1 }
+  .phase-title { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+  .phase-sub { font-size: 11px; color: var(--muted); }
+  .phase-days { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .phase-arrow { color: var(--dim); transition: transform 0.2s; font-size: 12px; }
+  .phase-arrow.open { transform: rotate(90deg); }
+
+  .phase-body { display: none; border-top: 1px solid var(--border); background: var(--bg2); }
+  .phase-body.open { display: block; }
+
+  .week-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; padding: 16px 20px; }
+  .week-card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 14px; }
+  .week-label { font-family: var(--mono); font-size: 9px; text-transform: uppercase; color: var(--dim); margin-bottom: 6px; }
+  .week-title { font-size: 13px; font-weight: 500; margin-bottom: 10px; }
+  .topic-list { list-style: none; }
+  .topic-list li { font-size: 11px; color: var(--muted); padding: 3px 0; border-bottom: 1px solid var(--border); display: flex; gap: 6px; }
+  .topic-list li:last-child { border-bottom: none; }
+  .topic-list li::before { content: '→'; color: var(--dim); font-family: var(--mono); }
+
+  .milestone {
+    margin: 0 20px 16px; background: var(--surface2); border-left: 3px solid;
+    border-radius: 0 6px 6px 0; padding: 10px 14px; font-size: 12px; color: var(--muted);
+  }
+
+  .syl-section { margin-bottom: 28px; }
+  .syl-title { font-size: 16px; font-weight: 500; margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+  .syl-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .syl-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .syl-table th { font-family: var(--mono); font-size: 10px; color: var(--dim); padding: 7px 10px; text-align: left; border-bottom: 1px solid var(--border2); }
+  .syl-table td { padding: 9px 10px; border-bottom: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+  .lvl { font-family: var(--mono); font-size: 10px; padding: 2px 7px; border-radius: 3px; }
+  .lvl-f { background: rgba(52,211,153,0.12); color: var(--re); }
+  .lvl-i { background: rgba(251,191,36,0.12); color: var(--forensics); }
+  .lvl-a { background: rgba(255,95,95,0.12); color: var(--pwn); }
+
+  .note { border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px; font-size: 12px; color: var(--muted); margin: 12px 0; background: var(--surface); }
+  .note.ai { border-color: rgba(244,114,182,0.3); background: rgba(244,114,182,0.04); }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-label">// ICO · ICOA 2026 · Sydney, Australia</div>
+  <h1>Temario <span>80 días</span> — Preparación con Miscellaneous</h1>
+  <p class="header-sub">Actualizado con módulos de Cloud, Radio e IA según el draft ICOA 2026.</p>
+  <div class="meta-chips">
+    <div class="chip">📅 80 días</div>
+    <div class="chip highlight">🤖 CTF4AI Target</div>
+    <div class="chip">📡 SDR & Cloud</div>
+  </div>
+</div>
+
+<nav class="nav">
+  <button class="nav-tab active" onclick="showTab('overview')">// overview</button>
+  <button class="nav-tab" onclick="showTab('roadmap')">// roadmap 80d</button>
+  <button class="nav-tab" onclick="showTab('syllabus')">// syllabus técnico</button>
+</nav>
+
+<div class="main">
+
+  <div id="panel-overview" class="panel active">
+    <div class="stat-grid">
+      <div class="stat-box"><span class="stat-num" style="color:var(--crypto)">80</span><div class="stat-lbl">días totales</div></div>
+      <div class="stat-box"><span class="stat-num" style="color:var(--misc)">New</span><div class="stat-lbl">Módulo Misc</div></div>
+    </div>
+    <div class="note ai">
+      <strong>Estrategia de Miscellaneous:</strong> Esta categoría evalúa la adaptabilidad. El enfoque no es memorizar, sino dominar el "framework de los 15 minutos" para entender tecnologías nuevas (SDR, Esoteric langs, Cloud IAM) durante la competencia.
+    </div>
+  </div>
+
+  <div id="panel-roadmap" class="panel">
+    <div class="sec-label">Fase 3 — Especialización y Tópicos Variados</div>
+    
+    <div class="phase-card">
+      <div class="phase-header" onclick="togglePhase(this)">
+        <span class="phase-badge" style="background:rgba(148,163,184,0.12);color:var(--misc)">MISC</span>
+        <div class="phase-title-wrap">
+          <div class="phase-title">Miscellaneous, Cloud & Radio (RF)</div>
+          <div class="phase-sub">Tópicos emergentes y retos de agilidad mental</div>
+        </div>
+        <span class="phase-days">Días 65–70</span>
+        <span class="phase-arrow">›</span>
+      </div>
+      <div class="phase-body">
+        <div class="week-grid">
+          <div class="week-card">
+            <div class="week-label">Cloud Security</div>
+            <div class="week-title">AWS/GCP Hacking</div>
+            <ul class="topic-list">
+              <li><strong>IAM & S3:</strong> Misconfiguraciones y buckets expuestos.</li>
+              <li><strong>Metadata Services:</strong> Explotación de SSRF (169.254.169.254).</li>
+              <li><strong>Serverless:</strong> Vulnerabilidades en AWS Lambda.</li>
+            </ul>
+          </div>
+          <div class="week-card">
+            <div class="week-label">Radio & Hardware</div>
+            <div class="week-title">Señales y SDR básico</div>
+            <ul class="topic-list">
+              <li><strong>SDR:</strong> Visualización de espectro y modulaciones.</li>
+              <li><strong>Replay Attacks:</strong> Captura con Universal Radio Hacker.</li>
+              <li><strong>Protocolos:</strong> Análisis básico de WiFi y BLE.</li>
+            </ul>
+          </div>
+          <div class="week-card">
+            <div class="week-label">AI & LLM Security</div>
+            <div class="week-title">Ataques a modelos</div>
+            <ul class="topic-list">
+              <li><strong>Prompt Injection:</strong> Técnicas de jailbreak (DAN, Indirect).</li>
+              <li><strong>Adversarial:</strong> Manipulación de inputs para modelos.</li>
+              <li><strong>Inversion:</strong> Recuperación de datos de entrenamiento.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="milestone" style="border-color:var(--misc)">
+          <strong>Hito:</strong> Extraer credenciales de una instancia Cloud y realizar un bypass de filtro LLM en menos de 30 min.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="panel-syllabus" class="panel">
+    <div class="syl-section">
+      <div class="syl-title"><div class="syl-dot" style="background:var(--misc)"></div>Miscellaneous & Emerging Tech</div>
+      <table class="syl-table">
+        <thead>
+          <tr><th>Tópico</th><th>Nivel</th><th>Herramientas clave</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Cloud Misconfigurations (IAM/SSRF)</td><td><span class="lvl lvl-i">Intermedio</span></td><td>aws-cli, pacu</td></tr>
+          <tr><td>Signal Processing & RF</td><td><span class="lvl lvl-i">Intermedio</span></td><td>GQRX, Universal Radio Hacker</td></tr>
+          <tr><td>Prompt Injection & AI Jailbreaking</td><td><span class="lvl lvl-a">Avanzado</span></td><td>Promptmap, Giskard</td></tr>
+          <tr><td>PyJail & Sandbox Escape</td><td><span class="lvl lvl-a">Avanzado</span></td><td>Introspección Python (__builtins__)</td></tr>
+          <tr><td>OSINT & Geolocation</td><td><span class="lvl lvl-f">Base</span></td><td>Sherlock, Exiftool, Google Earth</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function showTab(id) {
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('panel-' + id).classList.add('active');
+  }
+  function togglePhase(header) {
+    const body = header.nextElementSibling;
+    const arrow = header.querySelector('.phase-arrow');
+    body.classList.toggle('open');
+    if(arrow) arrow.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
