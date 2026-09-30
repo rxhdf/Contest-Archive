@@ -1,0 +1,12 @@
+pila vacía
+amax = 0
+
+tabla i de 0 a n-1:
+    si pila vacía o tabla[i] >= tope de la pila:
+        meter altura[i], posición i a la pila
+    sino:
+        mientras pila no vacía Y tabla[i] < tope de la pila:
+            sacar tope de la pila
+            ancho = i - posición del nuevo tope
+            area = h * ancho
+        meter tabla[i] a la pila
