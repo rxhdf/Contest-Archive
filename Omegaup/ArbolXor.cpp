@@ -1,5 +1,4 @@
 #include <bits/stdc++.h>
-
 #define MAXN 2000100
 using namespace std;
 

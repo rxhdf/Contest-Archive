@@ -58,8 +58,33 @@
   "files.associations": {
     "iostream": "cpp",
     "vector": "cpp",
-    "tuple": "cpp"
+    "tuple": "cpp",
+    "chrono": "cpp",
+    "complex": "cpp",
+    "array": "cpp",
+    "deque": "cpp",
+    "forward_list": "cpp",
+    "list": "cpp",
+    "string": "cpp",
+    "unordered_map": "cpp",
+    "unordered_set": "cpp",
+    "string_view": "cpp",
+    "format": "cpp",
+    "generator": "cpp",
+    "initializer_list": "cpp",
+    "ranges": "cpp",
+    "span": "cpp",
+    "stacktrace": "cpp",
+    "text_encoding": "cpp",
+    "regex": "cpp",
+    "valarray": "cpp",
+    "ostream": "cpp",
+    "bitset": "cpp",
+    "cmath": "cpp",
+    "random": "cpp",
+    "limits": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled",
-  "cmake.configureOnOpen": true
+  "cmake.configureOnOpen": true,
+  "idf.pythonInstallPath": "C:\\Espressif\\tools\\idf-python\\3.11.2\\python.exe"
 }
